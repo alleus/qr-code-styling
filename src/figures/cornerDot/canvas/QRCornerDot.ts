@@ -19,6 +19,7 @@ export default class QRCornerDot {
       case cornerDotTypes.square:
         drawFunction = this._drawSquare;
         break;
+      case cornerDotTypes.rounded:
       case cornerDotTypes.dot:
       default:
         drawFunction = this._drawDot;
