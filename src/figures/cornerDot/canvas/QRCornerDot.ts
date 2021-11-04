@@ -20,6 +20,8 @@ export default class QRCornerDot {
         drawFunction = this._drawSquare;
         break;
       case cornerDotTypes.rounded:
+        drawFunction = this._drawRoundedSquare;
+        break;
       case cornerDotTypes.dot:
       default:
         drawFunction = this._drawDot;
@@ -62,11 +64,39 @@ export default class QRCornerDot {
     });
   }
 
+  _basicRoundedSquare(args: BasicFigureDrawArgsCanvas): void {
+    const { size, context } = args;
+    const radius = size / 4;
+
+    this._rotateFigure({
+      ...args,
+      draw: () => {
+        context.save();
+        context.translate(-size / 2, -size / 2);
+
+        context.moveTo(size / 2, 0);
+
+        context.arcTo(size, 0, size, size, Math.min(size / 2, radius));
+        context.arcTo(size, size, 0, size, Math.min(size / 2, radius));
+        context.arcTo(0, size, 0, 0, Math.min(size / 2, radius));
+        context.arcTo(0, 0, size, 0, Math.min(size / 2, radius));
+
+        context.lineTo(size / 2, 0);
+
+        context.restore();
+      }
+    });
+  }
+
   _drawDot({ x, y, size, context, rotation }: DrawArgsCanvas): void {
     this._basicDot({ x, y, size, context, rotation });
   }
 
   _drawSquare({ x, y, size, context, rotation }: DrawArgsCanvas): void {
     this._basicSquare({ x, y, size, context, rotation });
+  }
+
+  _drawRoundedSquare({ x, y, size, context, rotation }: DrawArgsCanvas): void {
+    this._basicRoundedSquare({ x, y, size, context, rotation });
   }
 }
