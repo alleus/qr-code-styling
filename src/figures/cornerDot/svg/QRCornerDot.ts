@@ -71,7 +71,7 @@ export default class QRCornerDot {
 
   _roundedRoundedSquare(args: BasicFigureDrawArgs): void {
     const { size, x, y } = args;
-    
+
     this._rotateFigure({
       ...args,
       draw: () => {
